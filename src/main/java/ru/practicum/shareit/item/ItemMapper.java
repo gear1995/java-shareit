@@ -9,7 +9,7 @@ import ru.practicum.shareit.item.model.Item;
 @UtilityClass
 public class ItemMapper {
 
-    public Item toItem(final ItemDto itemDto) {
+    public Item toItem(final ItemDto itemDto, final int ownerId) {
         log.info("Начало преобразования itemDto в item");
 
         if (itemDto == null) {
@@ -20,7 +20,8 @@ public class ItemMapper {
                 .id(itemDto.getId())
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
-                .status(itemDto.getStatus())
+                .available(itemDto.getAvailable())
+                .owner(ownerId)
                 .build();
         log.info("Преобразование ItemDto в Item успешно завершено");
 
@@ -37,7 +38,8 @@ public class ItemMapper {
         ItemDto itemDto = ItemDto.builder()
                 .id(item.getId())
                 .name(item.getName())
-                .status(item.getStatus())
+                .description(item.getDescription())
+                .available(item.getAvailable())
                 .build();
 
         log.info("Преобразование Item в ItemDto успешно завершено");

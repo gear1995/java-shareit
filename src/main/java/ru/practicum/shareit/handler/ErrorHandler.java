@@ -1,5 +1,6 @@
 package ru.practicum.shareit.handler;
 
+import jakarta.validation.UnexpectedTypeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +24,13 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleValidationException(final ValidationException e) {
         log.error("Возникло исключение ValidationException. {}", e.getMessage());
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBadRequest(final UnexpectedTypeException e) {
+        log.error("Возникло исключение UnexpectedTypeException. {}", e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 }
