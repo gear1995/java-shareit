@@ -26,10 +26,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User create(UserDto newUser) {
         checkEmailExist(newUser.getEmail());
-        int ID = UserId.getUserId();
-        newUser.setId(ID);
-        ID++;
-        UserId.setUserId(ID);
+        int userId = UserId.getUserId();
+        newUser.setId(userId);
+        userId++;
+        UserId.setUserId(userId);
         User user = UserMapper.toUser(newUser);
         users.add(user);
         return user;

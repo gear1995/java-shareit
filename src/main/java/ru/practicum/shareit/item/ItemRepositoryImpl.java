@@ -20,10 +20,10 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public Item create(ItemDto newItemDto, int userId) {
-        int ID = ItemId.getItemId();
-        newItemDto.setId(ID);
-        ID++;
-        ItemId.setItemId(ID);
+        int itemId = ItemId.getItemId();
+        newItemDto.setId(itemId);
+        itemId++;
+        ItemId.setItemId(itemId);
 
         Item item = ItemMapper.toItem(newItemDto, userId);
         items.add(item);
