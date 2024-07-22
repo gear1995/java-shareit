@@ -23,12 +23,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto create(User user) {
-        if (user.getEmail() == null || user.getEmail().isBlank()) {
+    public UserDto create(UserDto userDto) {
+        if (userDto.getEmail() == null || userDto.getEmail().isBlank()) {
             throw new ValidationException("Email is required");
         }
-        userRepository.create(user);
-        return getUser(user.getId());
+        userRepository.create(userDto);
+        return getUser(userDto.getId());
     }
 
     @Override

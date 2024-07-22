@@ -8,7 +8,7 @@ public interface UserRepository {
 
     List<User> findAll();
 
-    User create(User user);
+    User create(UserDto userDto);
 
     User update(UserDto newUser, int id);
 

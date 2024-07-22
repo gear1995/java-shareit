@@ -25,12 +25,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User create(User newUser) {
+    public User create(UserDto newUser) {
         checkEmailExist(newUser.getEmail());
         newUser.setId(ID);
         ID++;
-        users.add(newUser);
-        return newUser;
+        final var user = UserMapper.toUser(newUser);
+        users.add(user);
+        return user;
     }
 
     @Override

@@ -25,14 +25,14 @@ public class UserMapper {
         return userDto;
     }
 
-    public UserDto toUser(UserDto userDto) {
+    public User toUser(UserDto userDto) {
         log.info("Начало преобразования userDto в user");
 
         if (userDto == null) {
             return null;
         }
 
-        UserDto user = UserDto.builder()
+        User user = User.builder()
                 .id(userDto.getId())
                 .name(userDto.getName())
                 .email(userDto.getEmail())
