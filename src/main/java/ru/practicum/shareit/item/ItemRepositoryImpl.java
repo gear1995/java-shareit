@@ -17,15 +17,16 @@ import java.util.Set;
 @Slf4j
 public class ItemRepositoryImpl implements ItemRepository {
     List<Item> items = new ArrayList<>();
-    private static int ID = 1;
 
     @Override
     public Item create(ItemDto newItemDto, int userId) {
+        int ID = ItemId.getItemId();
         newItemDto.setId(ID);
         ID++;
-        final var item = ItemMapper.toItem(newItemDto, userId);
-        items.add(item);
+        ItemId.setItemId(ID);
 
+        Item item = ItemMapper.toItem(newItemDto, userId);
+        items.add(item);
         return item;
     }
 

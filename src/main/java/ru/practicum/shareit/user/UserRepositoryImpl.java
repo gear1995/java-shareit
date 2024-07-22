@@ -17,7 +17,6 @@ import java.util.Objects;
 @Slf4j
 public class UserRepositoryImpl implements UserRepository {
     List<User> users = new ArrayList<>();
-    private static int ID = 1;
 
     @Override
     public List<User> findAll() {
@@ -27,9 +26,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User create(UserDto newUser) {
         checkEmailExist(newUser.getEmail());
+        int ID = UserId.getUserId();
         newUser.setId(ID);
         ID++;
-        final var user = UserMapper.toUser(newUser);
+        UserId.setUserId(ID);
+        User user = UserMapper.toUser(newUser);
         users.add(user);
         return user;
     }
