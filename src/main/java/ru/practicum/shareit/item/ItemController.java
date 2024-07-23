@@ -42,7 +42,6 @@ public class ItemController {
         return itemService.getUserItems(userId);
     }
 
-    ///items/search?text={text}
     @GetMapping("search")
     public List<ItemDto> search(@RequestParam("text") final String query) {
         log.info("Получен HTTP-запрос по адресу /items/search (метод GET). Вызван метод getItemsBySearchParam()");

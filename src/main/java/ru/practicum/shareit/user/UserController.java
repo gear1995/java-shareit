@@ -43,9 +43,9 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    public UserDto findById(@PathVariable int userId) {
+    public UserDto getUserById(@PathVariable int userId) {
         log.info("Получен HTTP-запрос по адресу /users/{userId} (метод GET). " +
-                " Вызван метод getUser(@PathVariable int userId)");
-        return userService.getUser(userId);
+                " Вызван метод getUserById(@PathVariable int userId)");
+        return userService.getUserById(userId);
     }
 }
