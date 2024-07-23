@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exeption.NotFoundException;
 import ru.practicum.shareit.exeption.ValidationException;
-import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +23,25 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User create(UserDto newUser) {
+    public User create(User newUser) {
         checkEmailExist(newUser.getEmail());
         int userId = UserId.getUserId();
         newUser.setId(userId);
         userId++;
         UserId.setUserId(userId);
-        User user = UserMapper.toUser(newUser);
-        users.add(user);
-        return user;
+        users.add(newUser);
+
+        return newUser;
     }
 
     @Override
-    public User update(UserDto updatedUser, int id) {
+    public User update(User updatedUser, int id) {
         for (User user : users) {
             if (Objects.equals(user.getEmail(), updatedUser.getEmail()) && user.getId() != id) {
                 throw new ValidationException("Email already exists");
             }
         }
-        User user = getUser(id);
+        User user = getUserById(id);
         if (updatedUser.getName() != null) {
             user.setName(updatedUser.getName());
         }
@@ -50,6 +49,7 @@ public class UserRepositoryImpl implements UserRepository {
         if (updatedUser.getEmail() != null) {
             user.setEmail(updatedUser.getEmail());
         }
+
         return user;
     }
 
@@ -62,7 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getUser(int id) {
+    public User getUserById(int id) {
         for (User user : users) {
             if (user.getId() == id) {
                 return user;

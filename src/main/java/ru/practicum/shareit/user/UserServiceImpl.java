@@ -2,10 +2,8 @@ package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.exeption.ValidationException;
 import ru.practicum.shareit.user.dto.UserDto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,31 +13,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findAll() {
-        List<UserDto> userDtoList = new ArrayList<>();
-        for (User user : userRepository.findAll()) {
-            userDtoList.add(UserMapper.toUserDto(user));
-        }
-        return userDtoList;
+        return UserMapper.toUserDtoList(userRepository.findAll());
     }
 
     @Override
     public UserDto create(UserDto userDto) {
-        if (userDto.getEmail() == null || userDto.getEmail().isBlank()) {
-            throw new ValidationException("Email is required");
-        }
-        userRepository.create(userDto);
-        return getUser(userDto.getId());
+        return UserMapper.toUserDto(userRepository.create(UserMapper.toUser(userDto)));
     }
 
     @Override
     public UserDto update(UserDto updatedUser, int id) {
-        userRepository.update(updatedUser, id);
-        return getUser(id);
+        return UserMapper.toUserDto(userRepository.update(UserMapper.toUser(updatedUser), id));
     }
 
     @Override
-    public UserDto getUser(int id) {
-        return UserMapper.toUserDto(userRepository.getUser(id));
+    public UserDto getUserById(int id) {
+        return UserMapper.toUserDto(userRepository.getUserById(id));
     }
 
     @Override

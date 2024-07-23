@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exeption.NotFoundException;
-import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.ArrayList;
@@ -19,15 +18,14 @@ public class ItemRepositoryImpl implements ItemRepository {
     List<Item> items = new ArrayList<>();
 
     @Override
-    public Item create(ItemDto newItemDto, int userId) {
+    public Item create(Item newItem) {
         int itemId = ItemId.getItemId();
-        newItemDto.setId(itemId);
+        newItem.setId(itemId);
         itemId++;
         ItemId.setItemId(itemId);
+        items.add(newItem);
 
-        Item item = ItemMapper.toItem(newItemDto, userId);
-        items.add(item);
-        return item;
+        return newItem;
     }
 
     @Override
@@ -41,17 +39,17 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public Item update(ItemDto updatedItemDto, int itemId) {
+    public Item update(Item updatedItem, int itemId) {
         Item item = getItemById(itemId);
-        if (updatedItemDto.getName() != null) {
-            item.setName(updatedItemDto.getName());
+        if (updatedItem.getName() != null) {
+            item.setName(updatedItem.getName());
         }
 
-        if (updatedItemDto.getDescription() != null) {
-            item.setDescription(updatedItemDto.getDescription());
+        if (updatedItem.getDescription() != null) {
+            item.setDescription(updatedItem.getDescription());
         }
-        if (updatedItemDto.getAvailable() != null) {
-            item.setAvailable(updatedItemDto.getAvailable());
+        if (updatedItem.getAvailable() != null) {
+            item.setAvailable(updatedItem.getAvailable());
         }
 
         return item;
