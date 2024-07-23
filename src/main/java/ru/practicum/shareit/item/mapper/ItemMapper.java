@@ -1,4 +1,4 @@
-package ru.practicum.shareit.item;
+package ru.practicum.shareit.item.mapper;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,6 @@ import java.util.List;
 public class ItemMapper {
 
     public Item toItemWithOwner(final ItemDto itemDto, final int ownerId) {
-        log.info("Начало преобразования itemDto в item c полем ownerId: {}", ownerId);
 
         if (itemDto == null) {
             return null;
@@ -33,7 +32,6 @@ public class ItemMapper {
     }
 
     public Item toItem(final ItemDto itemDto) {
-        log.info("Начало преобразования itemDto в item");
 
         if (itemDto == null) {
             return null;
@@ -51,7 +49,6 @@ public class ItemMapper {
     }
 
     public ItemDto toItemDto(final Item item) {
-        log.info("Начало преобразования item в itemDto");
 
         if (item == null) {
             return null;
