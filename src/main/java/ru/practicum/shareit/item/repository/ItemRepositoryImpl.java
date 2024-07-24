@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exeption.NotFoundException;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.model.ItemId;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,13 +16,12 @@ import java.util.Set;
 @Slf4j
 public class ItemRepositoryImpl implements ItemRepository {
     List<Item> items = new ArrayList<>();
+    private int itemId = 1;
 
     @Override
     public Item create(Item newItem) {
-        int itemId = ItemId.getItemId();
         newItem.setId(itemId);
         itemId++;
-        ItemId.setItemId(itemId);
         items.add(newItem);
 
         return newItem;

@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exeption.NotFoundException;
 import ru.practicum.shareit.exeption.ValidationException;
-import ru.practicum.shareit.user.model.UserId;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ import java.util.Objects;
 @Slf4j
 public class UserRepositoryImpl implements UserRepository {
     List<User> users = new ArrayList<>();
+    private int userId = 1;
 
     @Override
     public List<User> findAll() {
@@ -27,10 +27,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User create(User newUser) {
         checkEmailExist(newUser.getEmail());
-        int userId = UserId.getUserId();
         newUser.setId(userId);
         userId++;
-        UserId.setUserId(userId);
         users.add(newUser);
 
         return newUser;
