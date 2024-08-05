@@ -1,19 +1,21 @@
-package ru.practicum.shareit.user.dto;
+package ru.practicum.shareit.item.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
+
 @Data
 @EqualsAndHashCode(of = {"id"})
 @Builder
-public class UserDto {
+public class CommentDto {
     private Long id;
-    @Email
     @NotBlank
-    private String email;
+    private String text;
     @NotBlank
-    private String name;
+    private String authorName;
+    @NotBlank
+    private LocalDateTime created;
 }
