@@ -33,6 +33,9 @@ public class Item {
     @ElementCollection
     private List<Comment> comments;
 
+    @Transient
     private LocalDateTime lastBooking;
+
+    @Transient
     private LocalDateTime nextBooking;
 }
