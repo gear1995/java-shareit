@@ -1,24 +1,41 @@
 package ru.practicum.shareit.item.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Entity
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = {"id"})
+@Table(name = "items", schema = "public")
 public class Item {
-    private int id;
-    @NotBlank
-    private int owner;
-    @NotBlank
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "owner", nullable = false)
+    private Long owner;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @NotBlank
-    @Size(max = 200)
+
+    @Column(name = "description", nullable = false, length = 200)
     private String description;
-    @NotNull
+
+    @Column(name = "available", nullable = false)
     private Boolean available;
+
+    @Transient
+    private List<Comment> comments;
+
+    @Transient
+    private LocalDateTime lastBooking;
+
+    @Transient
+    private LocalDateTime nextBooking;
 }

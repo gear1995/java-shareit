@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDto;
+import ru.practicum.shareit.item.dto.ExtendedItemDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.service.ItemService;
 
@@ -18,27 +20,27 @@ public class ItemController {
 
     @PostMapping
     public ItemDto create(@Valid @RequestBody final ItemDto itemDto,
-                          @RequestHeader("X-Sharer-User-Id") final int userId) {
+                          @RequestHeader("X-Sharer-User-Id") final Long userId) {
         log.info("Получен HTTP-запрос по адресу /items (метод POST). Вызван метод create()");
         return itemService.create(itemDto, userId);
     }
 
     @PatchMapping("{itemId}")
-    public ItemDto update(@PathVariable final int itemId,
+    public ItemDto update(@PathVariable final Long itemId,
                           @RequestBody final ItemDto itemDto,
-                          @RequestHeader("X-Sharer-User-Id") final int userId) {
+                          @RequestHeader("X-Sharer-User-Id") final Long userId) {
         log.info("Получен HTTP-запрос по адресу /items/{itemId} (метод PATCH). Вызван метод update()");
         return itemService.update(itemId, itemDto, userId);
     }
 
     @GetMapping("{itemId}")
-    public ItemDto getItemById(@PathVariable final int itemId) {
+    public ExtendedItemDto getItemById(@PathVariable final Long itemId) {
         log.info("Получен HTTP-запрос по адресу /items/{itemId} (метод GET). Вызван метод getItemById()");
         return itemService.getItemById(itemId);
     }
 
     @GetMapping
-    public List<ItemDto> getUserItems(@RequestHeader("X-Sharer-User-Id") final int userId) {
+    public List<ExtendedItemDto> getUserItems(@RequestHeader("X-Sharer-User-Id") final Long userId) {
         log.info("Получен HTTP-запрос по адресу /items (метод GET). Вызван метод getUserItems()");
         return itemService.getUserItems(userId);
     }
@@ -47,5 +49,12 @@ public class ItemController {
     public List<ItemDto> search(@RequestParam("text") final String query) {
         log.info("Получен HTTP-запрос по адресу /items/search (метод GET). Вызван метод getItemsBySearchParam()");
         return itemService.getItemsBySearchParam(query);
+    }
+
+    @PostMapping("{itemId}/comment")
+    public CommentDto addComment(@PathVariable final Long itemId,
+                                 @RequestBody final CommentDto commentDto,
+                                 @RequestHeader("X-Sharer-User-Id") final Long userId) {
+        return itemService.addComment(itemId, commentDto, userId);
     }
 }

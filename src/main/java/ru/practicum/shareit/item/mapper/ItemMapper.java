@@ -2,6 +2,7 @@ package ru.practicum.shareit.item.mapper;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import ru.practicum.shareit.item.dto.ExtendedItemDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 
@@ -13,22 +14,19 @@ import java.util.List;
 @UtilityClass
 public class ItemMapper {
 
-    public Item toItemWithOwner(final ItemDto itemDto, final int ownerId) {
+    public Item toItemWithOwner(final ItemDto itemDto, final long ownerId) {
 
         if (itemDto == null) {
             return null;
         }
 
-        Item item = Item.builder()
+        return Item.builder()
                 .id(itemDto.getId())
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
                 .owner(ownerId)
                 .build();
-        log.info("Преобразование ItemDto в Item успешно завершено с ownerId: {}", ownerId);
-
-        return item;
     }
 
     public Item toItem(final ItemDto itemDto) {
@@ -37,15 +35,12 @@ public class ItemMapper {
             return null;
         }
 
-        Item item = Item.builder()
+        return Item.builder()
                 .id(itemDto.getId())
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
                 .build();
-        log.info("Преобразование ItemDto в Item успешно завершено");
-
-        return item;
     }
 
     public ItemDto toItemDto(final Item item) {
@@ -54,20 +49,18 @@ public class ItemMapper {
             return null;
         }
 
-        ItemDto itemDto = ItemDto.builder()
+        return ItemDto.builder()
                 .id(item.getId())
                 .name(item.getName())
+                .comments(CommentMapper.toCommentDtoList(item.getComments()))
                 .description(item.getDescription())
                 .available(item.getAvailable())
                 .build();
-
-        log.info("Преобразование Item в ItemDto успешно завершено");
-
-        return itemDto;
     }
 
     public static List<ItemDto> toItemDtoList(Collection<Item> itemCollection) {
         List<ItemDto> itemDtoList = new ArrayList<>();
+
         for (Item item : itemCollection) {
             itemDtoList.add(ItemMapper.toItemDto(item));
         }
@@ -77,10 +70,37 @@ public class ItemMapper {
 
     public static List<Item> toItemList(Collection<ItemDto> itemDtoCollection) {
         List<Item> itemDtoList = new ArrayList<>();
+
         for (ItemDto item : itemDtoCollection) {
             itemDtoList.add(ItemMapper.toItem(item));
         }
 
         return itemDtoList;
+    }
+
+    public static List<ExtendedItemDto> toExtendedItemDtoList(List<Item> itemCollection) {
+        List<ExtendedItemDto> extendedItemDtoList = new ArrayList<>();
+
+        for (Item item : itemCollection) {
+            extendedItemDtoList.add(ItemMapper.toExtendedItemDto(item));
+        }
+
+        return extendedItemDtoList;
+    }
+
+    public static ExtendedItemDto toExtendedItemDto(Item item) {
+        if (item == null) {
+            return null;
+        }
+
+        return ExtendedItemDto.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .comments(CommentMapper.toCommentDtoList(item.getComments()))
+                .description(item.getDescription())
+                .available(item.getAvailable())
+                .lastBooking(item.getLastBooking())
+                .nextBooking(item.getNextBooking())
+                .build();
     }
 }
