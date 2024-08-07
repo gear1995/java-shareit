@@ -17,15 +17,11 @@ public class UserMapper {
             return null;
         }
 
-        UserDto userDto = UserDto.builder()
+        return UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .build();
-
-        log.info("Преобразование user в userDto успешно завершено");
-
-        return userDto;
     }
 
     public User toUser(UserDto userDto) {
@@ -33,30 +29,28 @@ public class UserMapper {
             return null;
         }
 
-        User user = User.builder()
+        return User.builder()
                 .id(userDto.getId())
                 .name(userDto.getName())
                 .email(userDto.getEmail())
                 .build();
-
-        log.info("Преобразование userDto в user успешно завершено");
-
-        return user;
     }
 
     public List<UserDto> toUserDtoList(List<User> userList) {
         List<UserDto> userDtoList = new ArrayList<>();
-        for (User user : userList) {
+        for (var user : userList) {
             userDtoList.add(UserMapper.toUserDto(user));
         }
+
         return userDtoList;
     }
 
     public List<User> toUserList(List<UserDto> userDtoList) {
         List<User> userList = new ArrayList<>();
-        for (UserDto user : userDtoList) {
+        for (var user : userDtoList) {
             userList.add(UserMapper.toUser(user));
         }
+
         return userList;
     }
 }

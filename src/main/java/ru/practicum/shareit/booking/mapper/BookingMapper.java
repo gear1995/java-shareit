@@ -20,7 +20,7 @@ public class BookingMapper {
             return null;
         }
 
-        Booking booking = Booking.builder()
+        return Booking.builder()
                 .id(bookingDto.getId())
                 .start(bookingDto.getStart())
                 .end(bookingDto.getEnd())
@@ -28,10 +28,6 @@ public class BookingMapper {
                 .item(item)
                 .status(bookingDto.getStatus())
                 .build();
-
-        log.info("Преобразование bookingDto в booking успешно завершено");
-
-        return booking;
     }
 
     public BookingDto toBookingDto(Booking booking) {
@@ -39,7 +35,7 @@ public class BookingMapper {
             return null;
         }
 
-        BookingDto bookingDto = BookingDto.builder()
+        return BookingDto.builder()
                 .id(booking.getId())
                 .start(booking.getStart())
                 .end(booking.getEnd())
@@ -48,9 +44,6 @@ public class BookingMapper {
                 .itemId(booking.getItem().getId())
                 .status(booking.getStatus())
                 .build();
-        log.info("Преобразование booking в bookingDto успешно завершено");
-
-        return bookingDto;
     }
 
     public List<BookingDto> toBookingDtoList(List<Booking> bookings) {

@@ -3,6 +3,7 @@ package ru.practicum.shareit.item.service;
 import jakarta.validation.UnexpectedTypeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.exeption.NotFoundException;
@@ -31,12 +32,14 @@ public class ItemServiceImpl implements ItemService {
     private final BookingRepository bookingRepository;
 
     @Override
+    @Transactional
     public ItemDto create(ItemDto itemDto, Long userId) {
         userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
         return ItemMapper.toItemDto(itemRepository.save(ItemMapper.toItemWithOwner(itemDto, userId)));
     }
 
     @Override
+    @Transactional
     public ItemDto update(Long itemId, ItemDto itemDto, Long userId) {
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Item not found"));
         if (!Objects.equals(item.getOwner(), userId)) {
@@ -98,6 +101,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public CommentDto addComment(Long itemId, CommentDto commentDto, Long userId) {
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Item not found"));
         User author = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));

@@ -20,16 +20,13 @@ public class ItemMapper {
             return null;
         }
 
-        Item item = Item.builder()
+        return Item.builder()
                 .id(itemDto.getId())
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
                 .owner(ownerId)
                 .build();
-        log.info("Преобразование ItemDto в Item успешно завершено с ownerId: {}", ownerId);
-
-        return item;
     }
 
     public Item toItem(final ItemDto itemDto) {
@@ -38,15 +35,12 @@ public class ItemMapper {
             return null;
         }
 
-        Item item = Item.builder()
+        return Item.builder()
                 .id(itemDto.getId())
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
                 .build();
-        log.info("Преобразование ItemDto в Item успешно завершено");
-
-        return item;
     }
 
     public ItemDto toItemDto(final Item item) {
@@ -55,17 +49,13 @@ public class ItemMapper {
             return null;
         }
 
-        ItemDto itemDto = ItemDto.builder()
+        return ItemDto.builder()
                 .id(item.getId())
                 .name(item.getName())
                 .comments(CommentMapper.toCommentDtoList(item.getComments()))
                 .description(item.getDescription())
                 .available(item.getAvailable())
                 .build();
-
-        log.info("Преобразование Item в ItemDto успешно завершено");
-
-        return itemDto;
     }
 
     public static List<ItemDto> toItemDtoList(Collection<Item> itemCollection) {
@@ -103,7 +93,7 @@ public class ItemMapper {
             return null;
         }
 
-        ExtendedItemDto extendedItemDto = ExtendedItemDto.builder()
+        return ExtendedItemDto.builder()
                 .id(item.getId())
                 .name(item.getName())
                 .comments(CommentMapper.toCommentDtoList(item.getComments()))
@@ -112,9 +102,5 @@ public class ItemMapper {
                 .lastBooking(item.getLastBooking())
                 .nextBooking(item.getNextBooking())
                 .build();
-
-        log.info("Преобразование Item в ExtendedItemDto успешно завершено");
-
-        return extendedItemDto;
     }
 }

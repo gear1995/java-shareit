@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking.service;
 import jakarta.validation.UnexpectedTypeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingStateParam;
@@ -30,6 +31,7 @@ public class BookingServiceImpl implements BookingService {
     private final ItemRepository itemRepository;
 
     @Override
+    @Transactional
     public BookingDto create(BookingDto bookingDto) {
         User user = userRepository.findById(bookingDto.getBookerId())
                 .orElseThrow(() -> new NotFoundException("User with id " + bookingDto.getBookerId() + " not found"));
@@ -62,6 +64,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public BookingDto updateBookingStatus(Long bookingId, Long userId, Boolean approved) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Booking with id " + bookingId + " not found"));

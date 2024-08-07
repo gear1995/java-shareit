@@ -16,15 +16,12 @@ public class CommentMapper {
             return null;
         }
 
-        CommentDto commentDto = CommentDto.builder()
+        return CommentDto.builder()
                 .id(comment.getId())
                 .text(comment.getText())
                 .authorName(comment.getAuthor().getName())
                 .created(comment.getCreated())
                 .build();
-        log.info("Преобразование Comment в CommentDto успешно завершено");
-
-        return commentDto;
     }
 
     public List<CommentDto> toCommentDtoList(List<Comment> comments) {
