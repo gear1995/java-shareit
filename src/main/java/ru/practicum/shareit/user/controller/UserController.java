@@ -25,28 +25,28 @@ public class UserController {
     @PostMapping
     public UserDto create(@Valid @RequestBody UserDto userDto) {
         log.info("Получен HTTP-запрос по адресу /users (метод POST)." +
-                " Вызван метод create(@Valid @RequestBody UserDto user)");
+                 " Вызван метод create(@Valid @RequestBody UserDto user)");
         return userService.create(userDto);
     }
 
     @PatchMapping("{userId}")
-    public UserDto update(@RequestBody UserDto updatedUser, @PathVariable int userId) {
+    public UserDto update(@RequestBody UserDto updatedUser, @PathVariable Long userId) {
         log.info("Получен HTTP-запрос по адресу /users (метод PUT). "
-                + "Вызван метод update(@Valid @RequestBody UserDto newUserDto)");
+                 + "Вызван метод update(@Valid @RequestBody UserDto newUserDto)");
         return userService.update(updatedUser, userId);
     }
 
     @DeleteMapping("{userId}")
-    public void delete(@PathVariable int userId) {
+    public void delete(@PathVariable Long userId) {
         log.info("Получен HTTP-запрос по адресу /users/{userId} (метод DELETE). " +
-                " Вызван метод delete(@PathVariable int userId)");
+                 " Вызван метод delete(@PathVariable int userId)");
         userService.delete(userId);
     }
 
     @GetMapping("{userId}")
-    public UserDto getUserById(@PathVariable int userId) {
+    public UserDto getUserById(@PathVariable Long userId) {
         log.info("Получен HTTP-запрос по адресу /users/{userId} (метод GET). " +
-                " Вызван метод getUserById(@PathVariable int userId)");
+                 " Вызван метод getUserById(@PathVariable int userId)");
         return userService.getUserById(userId);
     }
 }
