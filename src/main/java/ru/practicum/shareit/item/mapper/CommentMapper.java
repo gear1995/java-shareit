@@ -1,14 +1,12 @@
 package ru.practicum.shareit.item.mapper;
 
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.model.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @UtilityClass
 public class CommentMapper {
     public CommentDto toCommentDto(Comment comment) {
