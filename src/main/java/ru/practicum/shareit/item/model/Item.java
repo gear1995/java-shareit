@@ -30,13 +30,12 @@ public class Item {
     @Column(name = "available", nullable = false)
     private Boolean available;
 
-    @OneToMany
-//    @Transient
+    @Transient
     private List<Comment> comments;
 
-//    @Transient
+    @Transient
     private LocalDateTime lastBooking;
 
-//    @Transient
+    @Transient
     private LocalDateTime nextBooking;
 }
