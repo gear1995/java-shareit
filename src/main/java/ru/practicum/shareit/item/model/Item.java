@@ -30,6 +30,9 @@ public class Item {
     @Column(name = "available", nullable = false)
     private Boolean available;
 
+    @Column(name = "request_id")
+    private Long requestId;
+
     @Transient
     private List<Comment> comments;
 

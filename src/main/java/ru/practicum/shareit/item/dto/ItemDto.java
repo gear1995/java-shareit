@@ -24,6 +24,8 @@ public class ItemDto {
 
     @NotNull
     private Boolean available;
+
+    private Long requestId;
     private Integer rentCount;
     private List<CommentDto> comments;
 }

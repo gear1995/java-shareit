@@ -2,7 +2,6 @@ package ru.practicum.shareit.request.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.catalina.connector.Request;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
@@ -18,12 +17,15 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "request_id", nullable = false)
-    private Request request;
+    private ItemRequest request;
 }

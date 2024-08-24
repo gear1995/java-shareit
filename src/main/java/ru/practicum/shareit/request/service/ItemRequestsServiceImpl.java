@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exeption.NotFoundException;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.mapper.ItemRequestMapper;
+import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.AnswerRepository;
 import ru.practicum.shareit.request.repository.ItemRequestRepository;
 import ru.practicum.shareit.user.repository.UserRepository;
@@ -31,17 +32,21 @@ public class ItemRequestsServiceImpl implements ItemRequestService {
 
         return ItemRequestMapper.toItemRequestDtoList(itemRequestRepository.findAllByRequesterId(userId)
                 .stream()
-                .peek(itemRequest -> itemRequest.setAnswers(answerRepository.findAllByRequest(itemRequest.getId())))
+                .peek(itemRequest -> itemRequest.setAnswers(answerRepository.findAllByRequestId(itemRequest.getId())))
                 .collect(Collectors.toList()));
     }
 
     @Override
     public List<ItemRequestDto> getAllRequests() {
-        return List.of();
+        return ItemRequestMapper.toItemRequestDtoList(itemRequestRepository.findAllOrderByCreatedDesc());
     }
 
     @Override
     public ItemRequestDto getRequestById(Long requestId) {
-        return null;
+        ItemRequest itemRequest = itemRequestRepository.findById(requestId)
+                .orElseThrow(() -> new NotFoundException("Request with id " + requestId + " not found"));
+        itemRequest.setAnswers(answerRepository.findAllByRequestId(requestId));
+
+        return ItemRequestMapper.toItemRequestDto(itemRequest);
     }
 }
