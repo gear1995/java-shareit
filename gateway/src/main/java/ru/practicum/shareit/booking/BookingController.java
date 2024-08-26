@@ -61,14 +61,4 @@ public class BookingController {
                 .orElseThrow(() -> new IllegalArgumentException("Unknown state: " + stateParam));
         return bookingClient.getOwnerBookings(ownerId, state);
     }
-
-//
-//    @GetMapping()
-//    public List<BookingDto> getAllBookingsByState(@RequestHeader("X-Sharer-User-Id") final Long userId,
-//                                                  @RequestParam(value = "state", required = false, defaultValue = "ALL") String state) {
-//        return bookingClient.getAllBookingsByState(userId, BookingStateParam.valueOf(state));
-//    }
-//
-//
-
 }
