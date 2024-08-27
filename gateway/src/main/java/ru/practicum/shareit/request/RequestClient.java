@@ -36,7 +36,7 @@ public class RequestClient extends BaseClient {
         return get("/all");
     }
 
-    public ResponseEntity<Object> getById(long path) {
-        return get("/" + path);
+    public ResponseEntity<Object> getById(long path, long userId) {
+        return get("/" + path, userId);
     }
 }

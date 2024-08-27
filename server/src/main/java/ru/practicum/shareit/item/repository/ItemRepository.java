@@ -15,4 +15,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
                    "or item.description ilike ?2) " +
                    "and item.available = true")
     List<Item> findAllByNameOrDescriptionContainsIgnoreCaseAndAvailableTrue(String name, String description);
+
+    List<Item> findByRequestId(long requestId);
 }

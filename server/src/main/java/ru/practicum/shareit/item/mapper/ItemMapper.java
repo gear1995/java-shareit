@@ -24,6 +24,7 @@ public class ItemMapper {
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
                 .owner(ownerId)
+                .requestId(itemDto.getRequestId())
                 .build();
     }
 
@@ -38,6 +39,7 @@ public class ItemMapper {
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
+                .requestId(itemDto.getRequestId())
                 .build();
     }
 
@@ -53,10 +55,15 @@ public class ItemMapper {
                 .comments(CommentMapper.toCommentDtoList(item.getComments()))
                 .description(item.getDescription())
                 .available(item.getAvailable())
+                .requestId(item.getRequestId())
                 .build();
     }
 
     public static List<ItemDto> toItemDtoList(Collection<Item> itemCollection) {
+        if (itemCollection == null) {
+            return null;
+        }
+
         List<ItemDto> itemDtoList = new ArrayList<>();
 
         for (Item item : itemCollection) {
@@ -67,6 +74,10 @@ public class ItemMapper {
     }
 
     public static List<Item> toItemList(Collection<ItemDto> itemDtoCollection) {
+        if (itemDtoCollection == null) {
+            return null;
+        }
+
         List<Item> itemDtoList = new ArrayList<>();
 
         for (ItemDto item : itemDtoCollection) {

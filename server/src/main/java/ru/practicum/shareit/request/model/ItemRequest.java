@@ -2,6 +2,7 @@ package ru.practicum.shareit.request.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.practicum.shareit.item.model.Item;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,5 +29,5 @@ public class ItemRequest {
     private LocalDateTime created;
 
     @Transient
-    private List<Answer> answers;
+    private List<Item> items;
 }

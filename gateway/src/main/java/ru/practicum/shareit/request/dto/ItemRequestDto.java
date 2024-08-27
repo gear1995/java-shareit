@@ -22,6 +22,5 @@ public class ItemRequestDto {
 
     private Long requesterId;
     private LocalDateTime created;
-    private List<AnswerDto> answers;
-    private ItemDto itemDto;
+    private List<ItemDto> items;
 }

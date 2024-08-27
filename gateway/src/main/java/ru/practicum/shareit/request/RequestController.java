@@ -37,8 +37,9 @@ public class RequestController {
     }
 
     @GetMapping("{requestId}")
-    public ResponseEntity<Object> getRequestById(@PathVariable final long requestId) {
+    public ResponseEntity<Object> getRequestById(@PathVariable final long requestId,
+                                                 @RequestHeader("X-Sharer-User-Id") final long userId) {
         log.info("Получен HTTP-запрос по адресу /requests/{requestId} (метод GET). Вызван метод getById(requestId)");
-        return requestClient.getById(requestId);
+        return requestClient.getById(requestId, userId);
     }
 }
