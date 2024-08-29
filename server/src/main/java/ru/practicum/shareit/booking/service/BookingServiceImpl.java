@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.dto.BookingDto;
+import ru.practicum.shareit.booking.mapper.BookingMapper;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingStateParam;
 import ru.practicum.shareit.booking.model.BookingStatus;
@@ -20,10 +21,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import static ru.practicum.shareit.booking.mapper.BookingMapper.toBooking;
-import static ru.practicum.shareit.booking.mapper.BookingMapper.toBookingDto;
-import static ru.practicum.shareit.booking.mapper.BookingMapper.toBookingDtoList;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +46,7 @@ public class BookingServiceImpl implements BookingService {
 
         bookingDto.setStatus(BookingStatus.WAITING);
 
-        return toBookingDto(bookingRepository.save(toBooking(bookingDto, user, item)));
+        return BookingMapper.toBookingDto(bookingRepository.save(BookingMapper.toBooking(bookingDto, user, item)));
     }
 
     @Override
@@ -59,7 +56,7 @@ public class BookingServiceImpl implements BookingService {
         Item item = itemRepository.findById(booking.getItem().getId())
                 .orElseThrow(() -> new NotFoundException("Item with id " + booking.getItem().getId() + " not found"));
         if (Objects.equals(booking.getBooker().getId(), userId) || item.getOwner().equals(userId)) {
-            return toBookingDto(booking);
+            return BookingMapper.toBookingDto(booking);
         } else {
             throw new ValidationException("You are not authorized to view this booking");
         }
@@ -70,7 +67,8 @@ public class BookingServiceImpl implements BookingService {
     public BookingDto updateBookingStatus(Long bookingId, Long userId, Boolean approved) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Booking with id " + bookingId + " not found"));
-        userRepository.findById(userId).orElseThrow(() -> new DataIntegrityViolationException("User with id " + userId + " not found"));
+        userRepository.findById(userId)
+                .orElseThrow(() -> new DataIntegrityViolationException("User with id " + userId + " not found"));
         Item item = itemRepository.findById(booking.getItem().getId())
                 .orElseThrow(() -> new NotFoundException("Item with id " + booking.getItem().getId() + " not found"));
 
@@ -85,23 +83,24 @@ public class BookingServiceImpl implements BookingService {
         }
         bookingRepository.save(booking);
 
-        return toBookingDto(booking);
+        return BookingMapper.toBookingDto(booking);
     }
 
     @Override
     public List<BookingDto> getAllBookingsByState(Long userId, BookingStateParam state) {
-        userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
+        userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User with id " + userId + " not found"));
 
         return switch (state) {
-            case ALL -> toBookingDtoList(bookingRepository.findAllByBookerIdOrderByStart(userId));
+            case ALL -> BookingMapper.toBookingDtoList(bookingRepository.findAllByBookerIdOrderByStart(userId));
             case REJECTED ->
-                    toBookingDtoList(bookingRepository.findAllByBookerIdAndStatusOrderByStart(userId, BookingStatus.REJECTED));
+                    BookingMapper.toBookingDtoList(bookingRepository.findAllByBookerIdAndStatusOrderByStart(userId, BookingStatus.REJECTED));
             case WAITING ->
-                    toBookingDtoList(bookingRepository.findAllByBookerIdAndStatusOrderByStart(userId, BookingStatus.WAITING));
+                    BookingMapper.toBookingDtoList(bookingRepository.findAllByBookerIdAndStatusOrderByStart(userId, BookingStatus.WAITING));
             case FUTURE ->
-                    toBookingDtoList(bookingRepository.findAllByBookerIdAndStartIsAfterOrderByStart(userId, LocalDateTime.now()));
+                    BookingMapper.toBookingDtoList(bookingRepository.findAllByBookerIdAndStartIsAfterOrderByStart(userId, LocalDateTime.now()));
             case PAST ->
-                    toBookingDtoList(bookingRepository.findAllByBookerIdAndStartIsBeforeOrderByStart(userId, LocalDateTime.now()));
+                    BookingMapper.toBookingDtoList(bookingRepository.findAllByBookerIdAndStartIsBeforeOrderByStart(userId, LocalDateTime.now()));
         };
     }
 
@@ -126,6 +125,6 @@ public class BookingServiceImpl implements BookingService {
             }
         }
 
-        return toBookingDtoList(booking);
+        return BookingMapper.toBookingDtoList(booking);
     }
 }
