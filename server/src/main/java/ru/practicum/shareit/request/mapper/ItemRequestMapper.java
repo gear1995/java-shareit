@@ -12,7 +12,9 @@ import java.util.List;
 @UtilityClass
 public class ItemRequestMapper {
     public ItemRequest toItemRequest(final ItemRequestDto itemRequestDto) {
-        if (itemRequestDto == null) return null;
+        if (itemRequestDto == null) {
+            return null;
+        }
 
         return ItemRequest.builder()
                 .id(itemRequestDto.getId())
@@ -25,7 +27,9 @@ public class ItemRequestMapper {
 
 
     public ItemRequestDto toItemRequestDto(final ItemRequest itemRequest) {
-        if (itemRequest == null) return null;
+        if (itemRequest == null) {
+            return null;
+        }
 
         return ItemRequestDto.builder()
                 .id(itemRequest.getId())

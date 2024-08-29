@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static ru.practicum.shareit.booking.mapper.BookingMapper.*;
+import static ru.practicum.shareit.booking.mapper.BookingMapper.toBooking;
+import static ru.practicum.shareit.booking.mapper.BookingMapper.toBookingDto;
+import static ru.practicum.shareit.booking.mapper.BookingMapper.toBookingDtoList;
 
 @Service
 @RequiredArgsConstructor
